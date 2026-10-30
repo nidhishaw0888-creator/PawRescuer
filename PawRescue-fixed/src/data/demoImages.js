@@ -1,0 +1,48 @@
+export const PHOTOS = {
+  dogSoulful: 'https://images.pexels.com/photos/12195420/pexels-photo-12195420.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  dogShelter: 'https://images.pexels.com/photos/39353936/pexels-photo-39353936.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  dogStreet: 'https://images.pexels.com/photos/38183369/pexels-photo-38183369.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  dogLeash: 'https://images.pexels.com/photos/30556362/pexels-photo-30556362.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  dogCollie: 'https://images.pexels.com/photos/32838180/pexels-photo-32838180.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  dogVetCare: 'https://images.pexels.com/photos/7469230/pexels-photo-7469230.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  dogVolunteerHug: 'https://images.pexels.com/photos/7474346/pexels-photo-7474346.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  dogInjuredVolunteer: 'https://images.pexels.com/photos/7474854/pexels-photo-7474854.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  dogLabFence: 'https://images.pexels.com/photos/7912804/pexels-photo-7912804.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  dogCageSad: 'https://images.pexels.com/photos/17679591/pexels-photo-17679591.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  dogBars: 'https://images.pexels.com/photos/3965286/pexels-photo-3965286.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  dogFence: 'https://images.pexels.com/photos/17671259/pexels-photo-17671259.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  catBandaged: 'https://images.pexels.com/photos/6816862/pexels-photo-6816862.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  kittenVet: 'https://images.pexels.com/photos/33394322/pexels-photo-33394322.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  kittenWeigh: 'https://images.pexels.com/photos/33394308/pexels-photo-33394308.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  catPinkTent: 'https://images.pexels.com/photos/4074726/pexels-photo-4074726.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  catExam: 'https://images.pexels.com/photos/6130971/pexels-photo-6130971.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  catIv: 'https://images.pexels.com/photos/4074742/pexels-photo-4074742.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  kittenBlueEyes: 'https://images.pexels.com/photos/16373694/pexels-photo-16373694.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  kittenOutdoor: 'https://images.pexels.com/photos/16173990/pexels-photo-16173990.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  kittenRug: 'https://images.pexels.com/photos/10480345/pexels-photo-10480345.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  kittenConcrete: 'https://images.pexels.com/photos/17457980/pexels-photo-17457980.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  kittenWall: 'https://images.pexels.com/photos/10668498/pexels-photo-10668498.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  cowBarn: 'https://images.pexels.com/photos/16846562/pexels-photo-16846562.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  cowsField: 'https://images.pexels.com/photos/7164014/pexels-photo-7164014.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  cowHerd: 'https://images.pexels.com/photos/14063449/pexels-photo-14063449.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  hawkScale: 'https://images.pexels.com/photos/29283000/pexels-photo-29283000.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  robinWings: 'https://images.pexels.com/photos/37946421/pexels-photo-37946421.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  finchBranch: 'https://images.pexels.com/photos/32831788/pexels-photo-32831788.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+  butcherbird: 'https://images.pexels.com/photos/28850027/pexels-photo-28850027.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+}
+
+export const PHOTO_BY_ANIMAL = {
+  'Stray dog': [PHOTOS.dogSoulful, PHOTOS.dogShelter, PHOTOS.dogLabFence],
+  'Stray cat': [PHOTOS.catBandaged, PHOTOS.kittenVet, PHOTOS.kittenBlueEyes],
+  Bird: [PHOTOS.hawkScale, PHOTOS.robinWings, PHOTOS.finchBranch],
+  Cattle: [PHOTOS.cowBarn, PHOTOS.cowsField, PHOTOS.cowHerd],
+  'Injured wildlife': [PHOTOS.butcherbird, PHOTOS.hawkScale, PHOTOS.robinWings],
+  Other: [PHOTOS.kittenWall, PHOTOS.dogFence, PHOTOS.dogStreet],
+}
+
+export const AUTH_PHOTOS = {
+  login: PHOTOS.dogVolunteerHug,
+  register: PHOTOS.kittenBlueEyes,
+  forgot: PHOTOS.dogBars,
+  hero: PHOTOS.dogVolunteerHug,
+}
