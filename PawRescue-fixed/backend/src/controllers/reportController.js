@@ -1,16 +1,12 @@
 import { body, validationResult } from 'express-validator'
 import mongoose from 'mongoose'
-import { mkdir, writeFile } from 'node:fs/promises'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { randomUUID } from 'node:crypto'
 import { Report } from '../models/Report.js'
 import { RescueCase } from '../models/RescueCase.js'
 import { ApiError } from '../utils/ApiError.js'
 import { suggestPriority } from '../services/priorityService.js'
 import { pushNotification } from '../services/notificationService.js'
-import { isCloudinaryConfigured, uploadToCloudinary } from '../config/cloudinary.js'
-
+import { supabase, SUPABASE_BUCKET } from '../config/supabase.js'
+import { randomUUID } from 'node:crypto'
 export function toFrontend(report) {
   if (!report) return null
   const r = report.toJSON()
@@ -154,34 +150,60 @@ export async function createReport(req, res, next) {
   res.status(201).json({ report: toFrontend(report) })
 }
 
+
 export async function uploadReportPhotos(req, res, next) {
-  if (!req.files?.length) return next(new ApiError(400, 'Attach at least one photo.'))
+  if (!req.files?.length) {
+    return next(new ApiError(400, 'Attach at least one photo.'))
+  }
+
+  if (!supabase) {
+    return next(
+      new ApiError(503, 'Image storage is not configured. Please contact support.')
+    )
+  }
 
   try {
-    let urls
-    if (isCloudinaryConfigured()) {
-      const uploads = await Promise.all(req.files.map((file) => uploadToCloudinary(file.buffer)))
-      urls = uploads.map((upload) => upload.url)
-    } else if (process.env.NODE_ENV !== 'production') {
-      // Local-only fallback so image uploads work during VS Code development
-      // without requiring Cloudinary credentials.
-      const here = path.dirname(fileURLToPath(import.meta.url))
-      const uploadDir = path.resolve(here, '../../uploads')
-      await mkdir(uploadDir, { recursive: true })
-      const extensionByMime = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp' }
-      urls = await Promise.all(req.files.map(async (file) => {
-        const filename = `${randomUUID()}${extensionByMime[file.mimetype] || '.img'}`
-        await writeFile(path.join(uploadDir, filename), file.buffer, { flag: 'wx' })
-        return `/uploads/${filename}`
-      }))
-    } else {
-      return next(new ApiError(503, 'Photo uploads are not configured. Configure Cloudinary in backend/.env before production use.'))
+    const extensionByMime = {
+      'image/jpeg': 'jpg',
+      'image/png': 'png',
+      'image/webp': 'webp',
     }
+
+    const urls = await Promise.all(
+      req.files.map(async (file) => {
+        const extension = extensionByMime[file.mimetype]
+
+        if (!extension) {
+          throw new Error('Only JPG, PNG and WebP images are supported.')
+        }
+
+        const filePath =
+          `${req.user._id}/${randomUUID()}.${extension}`
+
+        const { error } = await supabase.storage
+          .from(SUPABASE_BUCKET)
+          .upload(filePath, file.buffer, {
+            contentType: file.mimetype,
+            upsert: false,
+          })
+
+        if (error) {
+          console.error('[Supabase upload]', error.message)
+          throw new Error('Unable to upload image to storage.')
+        }
+
+        const { data } = supabase.storage
+          .from(SUPABASE_BUCKET)
+          .getPublicUrl(filePath)
+
+        return data.publicUrl
+      })
+    )
 
     res.status(201).json({ urls })
   } catch (error) {
-    console.error('[uploadReportPhotos] upload failed:', error.message)
-    next(new ApiError(500, 'Image upload failed. Please try again.'))
+    console.error('[uploadReportPhotos]', error.message)
+    next(new ApiError(500, error.message || 'Image upload failed.'))
   }
 }
 
