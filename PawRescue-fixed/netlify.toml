@@ -1,37 +1,4 @@
 
 [build]
-  command = "npm run build"
-  publish = "dist"
-</build>
-
-This tells Netlify to publish Vite's generated `dist` folder.
-
-## Step 3: Check your build locally
-
-Open the terminal inside `PawRescue-fixed` and run:
-
-```bash
-npm run build
-```
-
-After it succeeds, check whether this file exists:
-
-```text
-PawRescue-fixed/dist/index.html
-```
-
-Also check that `dist/assets` contains your generated JavaScript and CSS files.
-
-## Step 4: I need one more detail
-
-In Chrome:
-
-1. Open your live PawRescue website.
-2. Press F12.
-3. Open Console.
-4. Click the red MIME error.
-5. Copy the URL of the JavaScript file that failed.
-
-Send me that URL.
-
-**Don't push or redeploy yet.** I want to verify the generated files and the exact failing JavaScript URL before we make another deployment attempt.
+command = "npm run build"
+publish = "dist"
