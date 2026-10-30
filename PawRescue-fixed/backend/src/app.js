@@ -49,7 +49,7 @@ export function createApp() {
     next()
   })
 
-  app.get('/api/health', (_req, res) => res.json({ status: 'ok' }))
+  app.get('https://pawrescuer.onrender.com/api/health', (_req, res) => res.json({ status: 'ok' }))
 
   app.use('/api/auth', authRoutes)
   app.use('/api/users', userRoutes)
